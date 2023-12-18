@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/models/restaurant.dart';
-import 'package:restaurant_app/screens/detail_page.dart';
+import 'package:restaurant_app/constants/references.dart';
+import 'package:restaurant_app/data/models/restaurant.dart';
+import 'package:restaurant_app/ui/detail_page.dart';
 
-Widget buildRestaurantItem(BuildContext context, Restaurant restaurant) {
+Widget buildRestaurantItem(BuildContext context, RestaurantList restaurant) {
   return ListTile(
     tileColor: Theme.of(context).listTileTheme.tileColor,
     contentPadding: const EdgeInsets.symmetric(
@@ -12,7 +13,7 @@ Widget buildRestaurantItem(BuildContext context, Restaurant restaurant) {
     leading: Hero(
       tag: restaurant.id,
       child: Image.network(
-        restaurant.pictureId,
+        imageMediumUrl + restaurant.pictureId,
         width: 100,
         fit: BoxFit.cover,
       ),

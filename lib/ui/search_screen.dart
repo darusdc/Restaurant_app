@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/components/build_item_restaurant.dart';
-import 'package:restaurant_app/models/restaurant.dart';
+import 'package:restaurant_app/widgets/build_item_restaurant.dart';
+import 'package:restaurant_app/data/models/restaurant.dart';
 import 'package:restaurant_app/utils/get_json.dart';
 
 class SearchScreen extends StatefulWidget {
   static const routeName = "/search";
   const SearchScreen({super.key, required this.items});
 
-  final List<Restaurant> items;
+  final List<RestaurantList> items;
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -15,8 +15,8 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen> {
   Future<dynamic> data = fetchData();
-  List<Restaurant> restaurants = [];
-  List<Restaurant> filteredItems = [];
+  List<RestaurantList> restaurants = [];
+  List<RestaurantList> filteredItems = [];
 
   @override
   void initState() {
@@ -26,9 +26,9 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   void filterSearchResults(String query) {
-    List<Restaurant> searchResults = [];
+    List<RestaurantList> searchResults = [];
     if (query.isNotEmpty) {
-      for (Restaurant item in restaurants) {
+      for (RestaurantList item in restaurants) {
         if (item.name.toLowerCase().contains(query.toLowerCase())) {
           searchResults.add(item);
         }

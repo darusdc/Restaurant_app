@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/models/restaurant.dart';
-import 'package:restaurant_app/screens/detail_page.dart';
-import 'package:restaurant_app/screens/homepage.dart';
-import 'package:restaurant_app/screens/search_screen.dart';
-import 'package:restaurant_app/screens/splash_screen.dart';
-import 'package:restaurant_app/theme/styles.dart';
+import 'package:restaurant_app/data/models/restaurant.dart';
+import 'package:restaurant_app/ui/detail_page.dart';
+import 'package:restaurant_app/ui/homepage.dart';
+import 'package:restaurant_app/ui/search_screen.dart';
+import 'package:restaurant_app/ui/splash_screen.dart';
+import 'package:restaurant_app/common/styles.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,6 +23,22 @@ class MyApp extends StatelessWidget {
               onPrimary: Colors.black,
               secondary: secondaryColor,
             ),
+        scaffoldBackgroundColor: Colors.white,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        textTheme: restaurantTextTheme,
+        appBarTheme: const AppBarTheme(elevation: 0),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: secondaryColor,
+            foregroundColor: Colors.white,
+            textStyle: const TextStyle(),
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(
+                Radius.circular(0),
+              ),
+            ),
+          ),
+        ),
         useMaterial3: true,
       ),
       initialRoute: HomePage.routeName,
@@ -30,10 +46,10 @@ class MyApp extends StatelessWidget {
         HomePage.routeName: (context) => const SplashScreen(),
         RestaurantDetailPage.routeName: (context) => RestaurantDetailPage(
             restaurant:
-                ModalRoute.of(context)?.settings.arguments as Restaurant),
+                ModalRoute.of(context)?.settings.arguments as DetailRestaurant),
         SearchScreen.routeName: (context) => SearchScreen(
               items: ModalRoute.of(context)?.settings.arguments
-                  as List<Restaurant>,
+                  as List<RestaurantList>,
             ),
       },
     );

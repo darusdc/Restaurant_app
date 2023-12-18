@@ -1,12 +1,12 @@
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/models/restaurant.dart';
+import 'package:restaurant_app/data/models/restaurant.dart';
 
 class RestaurantDetailPage extends StatelessWidget {
   static const routeName = '/restaurant_detail';
 
-  final Restaurant restaurant;
+  final DetailRestaurant restaurant;
 
   const RestaurantDetailPage({Key? key, required this.restaurant})
       : super(key: key);

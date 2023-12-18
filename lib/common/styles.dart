@@ -6,13 +6,13 @@ const Color secondaryColor = Color(0xff2658fd);
 
 final TextTheme restaurantTextTheme = TextTheme(
   titleLarge: GoogleFonts.merriweather(
-      fontSize: 92, fontWeight: FontWeight.w300, letterSpacing: -1.5),
+      fontSize: 32, fontWeight: FontWeight.w300, letterSpacing: -1.5),
   titleMedium: GoogleFonts.merriweather(
-      fontSize: 57, fontWeight: FontWeight.w300, letterSpacing: -0.5),
+      fontSize: 27, fontWeight: FontWeight.w300, letterSpacing: -0.5),
   titleSmall:
-      GoogleFonts.merriweather(fontSize: 46, fontWeight: FontWeight.w400),
+      GoogleFonts.merriweather(fontSize: 24, fontWeight: FontWeight.w400),
   headlineLarge: GoogleFonts.merriweather(
-      fontSize: 32, fontWeight: FontWeight.w400, letterSpacing: 0.25),
+      fontSize: 27, fontWeight: FontWeight.w400, letterSpacing: 0.25),
   headlineMedium:
       GoogleFonts.merriweather(fontSize: 23, fontWeight: FontWeight.w400),
   headlineSmall: GoogleFonts.merriweather(
