@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/data/models/restaurant.dart';
 import 'package:restaurant_app/ui/detail_page.dart';
 import 'package:restaurant_app/ui/homepage.dart';
 import 'package:restaurant_app/ui/search_screen.dart';
@@ -45,12 +44,8 @@ class MyApp extends StatelessWidget {
       routes: {
         HomePage.routeName: (context) => const SplashScreen(),
         RestaurantDetailPage.routeName: (context) => RestaurantDetailPage(
-            restaurant:
-                ModalRoute.of(context)?.settings.arguments as DetailRestaurant),
-        SearchScreen.routeName: (context) => SearchScreen(
-              items: ModalRoute.of(context)?.settings.arguments
-                  as List<RestaurantList>,
-            ),
+            restaurantId: ModalRoute.of(context)?.settings.arguments as String),
+        SearchScreen.routeName: (context) => const SearchScreen(),
       },
     );
   }

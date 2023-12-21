@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app/data/models/restaurant.dart';
 import 'package:restaurant_app/provider/restaurants_provider.dart';
 import 'package:restaurant_app/ui/search_screen.dart';
 import 'package:restaurant_app/widgets/build_item_restaurant.dart';
@@ -12,9 +12,8 @@ import 'package:restaurant_app/widgets/platform_widget.dart';
 
 // ignore: must_be_immutable
 class RestaurantListPage extends StatelessWidget {
-  RestaurantListPage({super.key});
+  const RestaurantListPage({super.key});
 
-  List<RestaurantList> items = [];
   Widget _buildList() {
     return Consumer<RestaurantsProvider>(
       builder: (context, state, _) {
@@ -32,13 +31,29 @@ class RestaurantListPage extends StatelessWidget {
         } else if (state.state == ResultState.noData) {
           return Center(
             child: Material(
-              child: Text(state.message),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 200,
+                  ),
+                  Lottie.asset('assets/no_data.json'),
+                  const Text("There is no data from server!"),
+                ],
+              ),
             ),
           );
         } else if (state.state == ResultState.error) {
           return Center(
             child: Material(
-              child: Text(state.message),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 200,
+                  ),
+                  Lottie.asset('assets/network_error.json'),
+                  const Text("Check your connection or server status!"),
+                ],
+              ),
             ),
           );
         } else {
@@ -55,8 +70,10 @@ class RestaurantListPage extends StatelessWidget {
   Widget _buildAndroid(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     ScrollController sc = ScrollController();
+    ThemeData themes = Theme.of(context);
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: themes.primaryColor,
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: screenWidth > 300
@@ -67,8 +84,7 @@ class RestaurantListPage extends StatelessWidget {
                     ),
                     IconButton(
                         onPressed: () {
-                          Navigator.pushNamed(context, SearchScreen.routeName,
-                              arguments: items);
+                          Navigator.pushNamed(context, SearchScreen.routeName);
                         },
                         icon: const Icon(Icons.search))
                   ]
@@ -84,6 +100,7 @@ class RestaurantListPage extends StatelessWidget {
           headerSliverBuilder: (context, innerBoxIsScrolled) {
             return [
               SliverAppBar(
+                backgroundColor: themes.primaryColor,
                 pinned: true,
                 expandedHeight: 200,
                 flexibleSpace: FlexibleSpaceBar(
@@ -94,7 +111,7 @@ class RestaurantListPage extends StatelessWidget {
                   title: Text(
                     "Temukan Restoran Favoritmu:",
                     textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.titleSmall,
+                    style: Theme.of(context).textTheme.headlineLarge,
                   ),
                 ),
               )

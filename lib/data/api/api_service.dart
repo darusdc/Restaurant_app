@@ -13,12 +13,43 @@ class ApiService {
     }
   }
 
-  Future<DetailRestaurant> detailRestaurant(num id) async {
+  Future<DetailRestaurantResult> detailRestaurant(String id) async {
     final response = await http.get(Uri.parse("$baseUrl/detail/$id"));
     if (response.statusCode == 200) {
-      return DetailRestaurant.fromJson(json.decode(response.body));
+      return DetailRestaurantResult.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load detail restaurant');
+    }
+  }
+
+  Future<CustomerReview> postReview(
+      String reviewText, String id, String name) async {
+    const String apiUrl = '$baseUrl/review';
+
+    Map<String, String> headers = {
+      'Content-Type': 'application/json',
+    };
+
+    Map<String, String> reviewData = {
+      'id': id,
+      'name': name,
+      'review': reviewText,
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse(apiUrl),
+        headers: headers,
+        body: json.encode(reviewData),
+      );
+
+      if (response.statusCode == 200) {
+        return CustomerReview.fromJson(json.decode(response.body));
+      } else {
+        throw Exception('Failed to post Customer');
+      }
+    } catch (e) {
+      throw Exception('There is error to sending data: $e');
     }
   }
 }

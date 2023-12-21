@@ -72,25 +72,25 @@ class RestaurantList {
       };
 }
 
-GetDetailRestaurant getDetailRestaurantFromJson(String str) =>
-    GetDetailRestaurant.fromJson(json.decode(str));
+DetailRestaurantResult getDetailRestaurantFromJson(String str) =>
+    DetailRestaurantResult.fromJson(json.decode(str));
 
-String getDetailRestaurantToJson(GetDetailRestaurant data) =>
+String getDetailRestaurantToJson(DetailRestaurantResult data) =>
     json.encode(data.toJson());
 
-class GetDetailRestaurant {
+class DetailRestaurantResult {
   bool error;
   String message;
   DetailRestaurant restaurant;
 
-  GetDetailRestaurant({
+  DetailRestaurantResult({
     required this.error,
     required this.message,
     required this.restaurant,
   });
 
-  factory GetDetailRestaurant.fromJson(Map<String, dynamic> json) =>
-      GetDetailRestaurant(
+  factory DetailRestaurantResult.fromJson(Map<String, dynamic> json) =>
+      DetailRestaurantResult(
         error: json["error"],
         message: json["message"],
         restaurant: DetailRestaurant.fromJson(json["restaurant"]),
@@ -196,6 +196,33 @@ class CustomerReview {
         "name": name,
         "review": review,
         "date": date,
+      };
+}
+
+class CustomerReviews {
+  String error;
+  String message;
+  List<CustomerReview> customerReviews;
+
+  CustomerReviews({
+    required this.error,
+    required this.message,
+    required this.customerReviews,
+  });
+
+  factory CustomerReviews.fromJson(Map<String, dynamic> json) =>
+      CustomerReviews(
+        error: json["error"],
+        message: json["message"],
+        customerReviews: List<CustomerReview>.from(
+            json["restaurants"].map((x) => CustomerReview.fromJson(x))),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "error": error,
+        "message": message,
+        "customerReviews":
+            List<dynamic>.from(customerReviews.map((x) => x.toJson())),
       };
 }
 

@@ -51,7 +51,7 @@ Widget buildRestaurantItem(BuildContext context, RestaurantList restaurant) {
     ),
     onTap: () {
       Navigator.pushNamed(context, RestaurantDetailPage.routeName,
-          arguments: restaurant);
+          arguments: restaurant.id);
     },
   );
 }

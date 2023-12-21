@@ -5,12 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/common/styles.dart';
 import 'package:restaurant_app/data/api/api_service.dart';
-import 'package:restaurant_app/data/models/restaurant.dart';
 import 'package:restaurant_app/provider/restaurants_provider.dart';
 import 'package:restaurant_app/ui/restaurant_list.dart';
 import 'package:restaurant_app/ui/settings_page.dart';
-import 'package:restaurant_app/widgets/build_item_restaurant.dart';
-import 'package:restaurant_app/ui/search_screen.dart';
 import 'package:restaurant_app/widgets/platform_widget.dart';
 
 // class HomePage extends StatelessWidget {
@@ -121,7 +118,7 @@ class _HomePageState extends State<HomePage> {
   final List<Widget> _listWidget = [
     ChangeNotifierProvider<RestaurantsProvider>(
       create: (context) => RestaurantsProvider(apiService: ApiService()),
-      child: RestaurantListPage(),
+      child: const RestaurantListPage(),
     ),
     const SettingsPage(),
   ];
@@ -146,12 +143,16 @@ class _HomePageState extends State<HomePage> {
   Widget _buildAndroid(BuildContext context) {
     return Scaffold(
       body: _listWidget[_bottomNavIndex],
-      bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: secondaryColor,
-        currentIndex: _bottomNavIndex,
-        items: _bottomNavBarItems,
-        onTap: _onBottomNavTapped,
-      ),
+      bottomNavigationBar: kIsWeb
+          ? null
+          : Platform.isAndroid || Platform.isIOS
+              ? BottomNavigationBar(
+                  selectedItemColor: secondaryColor,
+                  currentIndex: _bottomNavIndex,
+                  items: _bottomNavBarItems,
+                  onTap: _onBottomNavTapped,
+                )
+              : null,
     );
   }
 

@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app/widgets/build_item_restaurant.dart';
 import 'package:restaurant_app/data/models/restaurant.dart';
-import 'package:restaurant_app/utils/get_json.dart';
 
 class SearchScreen extends StatefulWidget {
   static const routeName = "/search";
-  const SearchScreen({super.key, required this.items});
-
-  final List<RestaurantList> items;
+  const SearchScreen({super.key});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
-  Future<dynamic> data = fetchData();
   List<RestaurantList> restaurants = [];
   List<RestaurantList> filteredItems = [];
 
   @override
   void initState() {
     super.initState();
-    restaurants = widget.items;
     filteredItems = restaurants;
   }
 

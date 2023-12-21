@@ -47,3 +47,70 @@ class RestaurantsProvider extends ChangeNotifier {
     }
   }
 }
+
+class DetailRestaurantsProvider extends ChangeNotifier {
+  final ApiService apiService;
+  final String id;
+  DetailRestaurantsProvider({required this.apiService, required this.id}) {
+    fetchDetailRestaurant(id);
+  }
+
+  late DetailRestaurantResult _detailRestaurant;
+  late ResultState _state;
+  String _message = '';
+
+  String get message => _message;
+
+  DetailRestaurantResult get result => _detailRestaurant;
+
+  ResultState get state => _state;
+
+  Future<dynamic> fetchDetailRestaurant(String id) async {
+    try {
+      _state = ResultState.loading;
+      notifyListeners();
+      final restaurant = await apiService.detailRestaurant(id);
+      if (restaurant.restaurant.id.isEmpty) {
+        _state = ResultState.noData;
+        notifyListeners();
+        return _message = 'Empty Data';
+      } else {
+        _state = ResultState.hasData;
+        notifyListeners();
+        return _detailRestaurant = restaurant;
+      }
+    } catch (e) {
+      _state = ResultState.error;
+      notifyListeners();
+      return _message = 'Error --> $e';
+    }
+  }
+}
+
+class ReviewProvider with ChangeNotifier {
+  bool _isLoading = false;
+
+  bool get isLoading => _isLoading;
+
+  Future<dynamic> reviewProviderPost(
+      ApiService apiService, String id, String reviewText, String name) async {
+    try {
+      _isLoading = true;
+      notifyListeners();
+      final reviews = await apiService.postReview(reviewText, name, id);
+      if (reviews.name.isEmpty) {
+        _isLoading = false;
+        notifyListeners();
+        return 'Empty Data';
+      } else {
+        _isLoading = false;
+        notifyListeners();
+        return reviews;
+      }
+    } catch (e) {
+      _isLoading = false;
+      notifyListeners();
+      return 'Error --> $e';
+    }
+  }
+}
