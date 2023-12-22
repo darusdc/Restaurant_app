@@ -31,7 +31,10 @@ Widget buildRestaurantItem(BuildContext context, RestaurantList restaurant) {
               size: 12,
             ),
             const SizedBox(width: 3),
-            Text(restaurant.city, style: const TextStyle(fontSize: 12)),
+            Text(restaurant.city,
+                style: const TextStyle(fontSize: 12),
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis),
           ],
         ),
         Row(
@@ -41,10 +44,10 @@ Widget buildRestaurantItem(BuildContext context, RestaurantList restaurant) {
               size: 12,
             ),
             const SizedBox(width: 3),
-            Text(
-              restaurant.rating.toString(),
-              style: const TextStyle(fontSize: 12),
-            ),
+            Text(restaurant.rating.toString(),
+                style: const TextStyle(fontSize: 12),
+                maxLines: 4,
+                overflow: TextOverflow.ellipsis),
           ],
         )
       ],

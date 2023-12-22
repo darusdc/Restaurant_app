@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:restaurant_app/constants/references.dart';
 import 'package:restaurant_app/provider/restaurants_provider.dart';
@@ -39,9 +41,9 @@ class _ReviewsPageState extends State<ReviewsPage> {
         Uri.parse(apiUrl),
         headers: headers,
         body: json.encode(reviewData),
+        encoding: const Utf8Codec(),
       );
-
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         return true;
       } else {
         return false;
@@ -52,24 +54,33 @@ class _ReviewsPageState extends State<ReviewsPage> {
   }
 
   Widget _buildAndroid(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+    ScrollController sc = ScrollController();
     return Scaffold(
       appBar: AppBar(
         title: const Text(ReviewsPage.reviewsTitle),
       ),
-      body: SingleChildScrollView(child: _buildList(context)),
+      body: Platform.isAndroid
+          ? SingleChildScrollView(
+              controller: sc,
+              child: screenWidth > 300 ? _buildList(context, sc) : null)
+          : SingleChildScrollView(
+              child: screenWidth > 300 ? _buildList(context, sc) : null,
+            ),
     );
   }
 
   Widget _buildIos(BuildContext context) {
+    ScrollController sc = ScrollController();
     return CupertinoPageScaffold(
       navigationBar: const CupertinoNavigationBar(
         middle: Text(ReviewsPage.reviewsTitle),
       ),
-      child: _buildList(context),
+      child: _buildList(context, sc),
     );
   }
 
-  Widget _buildList(BuildContext context) {
+  Widget _buildList(BuildContext context, ScrollController sc) {
     const String imgPath =
         "https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png";
     return Consumer<DetailRestaurantsProvider>(
@@ -81,6 +92,7 @@ class _ReviewsPageState extends State<ReviewsPage> {
           return Column(
             children: [
               ListView.builder(
+                controller: Platform.isAndroid || Platform.isIOS ? sc : null,
                 shrinkWrap: true,
                 itemCount: reviews.length,
                 itemBuilder: (context, index) {
@@ -115,9 +127,14 @@ class _ReviewsPageState extends State<ReviewsPage> {
                         ),
                         Row(
                           children: [
-                            Text(
-                              review.review,
-                              style: Theme.of(context).textTheme.labelLarge,
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width - 150,
+                              child: Text(
+                                review.review,
+                                style: Theme.of(context).textTheme.labelLarge,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 4,
+                              ),
                             ),
                           ],
                         )
@@ -148,18 +165,16 @@ class _ReviewsPageState extends State<ReviewsPage> {
                     const SizedBox(height: 16.0),
                     ElevatedButton(
                       onPressed: () async {
-                        // Handle the submission of the review
                         String reviewText = reviewController.text;
 
                         if (reviewText.isNotEmpty) {
-                          // Post the review to the API
                           bool success =
                               await postReview(reviewText, widget.id, 'Anonim');
 
                           if (success) {
-                            // Update the state to trigger a reload of reviews
                             state.fetchDetailRestaurant(widget.id);
 
+                            reviewController.clear();
                             // ignore: use_build_context_synchronously
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
@@ -186,8 +201,48 @@ class _ReviewsPageState extends State<ReviewsPage> {
               ),
             ],
           );
+        } else if (state.state == ResultState.noData) {
+          return Center(
+            child: Material(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 200,
+                  ),
+                  Lottie.asset('assets/no_data.json'),
+                  const Text("There is no data from server!"),
+                ],
+              ),
+            ),
+          );
+        } else if (state.state == ResultState.error) {
+          return Center(
+            child: Material(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 200,
+                  ),
+                  Lottie.asset('assets/network_error.json'),
+                  const Text("Check your connection or server status!"),
+                ],
+              ),
+            ),
+          );
         } else {
-          return const Text('null');
+          return Center(
+            child: Material(
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 200,
+                  ),
+                  Lottie.asset('assets/network_error.json'),
+                  const Text("Unknown Error"),
+                ],
+              ),
+            ),
+          );
         }
       },
     );

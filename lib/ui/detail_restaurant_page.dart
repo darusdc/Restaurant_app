@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -113,6 +112,8 @@ class DetailRestaurantPage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     List foods = restaurant.menus.foods;
     List drinks = restaurant.menus.drinks;
+    String restoCategory =
+        restaurant.categories.map((e) => '${e.name}, ').join();
     return SingleChildScrollView(
       controller: kIsWeb
           ? null
@@ -136,7 +137,22 @@ class DetailRestaurantPage extends StatelessWidget {
                             size: 16,
                           ),
                           const SizedBox(width: 5),
-                          Text(restaurant.city,
+                          Text('${restaurant.address}, ${restaurant.city}',
+                              style: const TextStyle(fontSize: 16)),
+                        ],
+                      ),
+                      Row(
+                        children: [
+                          const Icon(
+                            Icons.category,
+                            size: 16,
+                          ),
+                          const SizedBox(width: 5),
+                          Text(
+                              restoCategory.replaceRange(
+                                  restoCategory.length - 2,
+                                  restoCategory.length,
+                                  ""),
                               style: const TextStyle(fontSize: 16)),
                         ],
                       ),
@@ -148,7 +164,7 @@ class DetailRestaurantPage extends StatelessWidget {
                       const SizedBox(height: 10),
                       Text(
                         "Menu:",
-                        style: Theme.of(context).textTheme.headlineSmall,
+                        style: Theme.of(context).textTheme.titleMedium,
                       ),
                       const SizedBox(height: 10),
                       Text(
@@ -181,7 +197,7 @@ class DetailRestaurantPage extends StatelessWidget {
                                       height: 50,
                                       width: MediaQuery.of(context).size.width,
                                       child: Align(
-                                        alignment: Alignment.centerLeft,
+                                        alignment: Alignment.center,
                                         child: Text(
                                           food.name,
                                           style: Theme.of(context)
@@ -226,7 +242,7 @@ class DetailRestaurantPage extends StatelessWidget {
                                       height: 50,
                                       width: MediaQuery.of(context).size.width,
                                       child: Align(
-                                        alignment: Alignment.centerLeft,
+                                        alignment: Alignment.center,
                                         child: Text(
                                           drink.name,
                                           style: Theme.of(context)

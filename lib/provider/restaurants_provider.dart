@@ -114,3 +114,47 @@ class ReviewProvider with ChangeNotifier {
     }
   }
 }
+
+class SearchProvider extends ChangeNotifier {
+  final ApiService apiService;
+  final String query;
+  SearchProvider({required this.apiService, required this.query}) {
+    fetchSearchResult(query);
+  }
+
+  List<RestaurantList> _searchResult = [];
+  late ResultState _state;
+  String _message = '';
+
+  String get message => _message;
+
+  List<RestaurantList> get result => _searchResult;
+
+  ResultState get state => _state;
+
+  Future<dynamic> fetchSearchResult(String query) async {
+    try {
+      _state = ResultState.loading;
+      notifyListeners();
+      final data = await apiService.searchRestaurants(query);
+      if (data.restaurants.isEmpty) {
+        _state = ResultState.noData;
+        notifyListeners();
+        return _message = 'Empty Data';
+      } else {
+        _state = ResultState.hasData;
+        notifyListeners();
+        return _searchResult = data.restaurants;
+      }
+    } catch (e) {
+      _state = ResultState.error;
+      notifyListeners();
+      return _message = 'Error --> $e';
+    }
+  }
+
+  void resetFilteredItems() {
+    _searchResult = fetchSearchResult('') as List<RestaurantList>;
+    notifyListeners();
+  }
+}

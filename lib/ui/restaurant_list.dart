@@ -10,7 +10,6 @@ import 'package:restaurant_app/ui/search_screen.dart';
 import 'package:restaurant_app/widgets/build_item_restaurant.dart';
 import 'package:restaurant_app/widgets/platform_widget.dart';
 
-// ignore: must_be_immutable
 class RestaurantListPage extends StatelessWidget {
   const RestaurantListPage({super.key});
 
