@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app/data/api/api_service.dart';
-import 'package:restaurant_app/data/models/restaurant.dart';
+import 'package:resto_mana/data/api/api_service.dart';
+import 'package:resto_mana/data/models/restaurant.dart';
 
 enum ResultState {
   loading,
@@ -13,7 +13,7 @@ class RestaurantsProvider extends ChangeNotifier {
   final ApiService apiService;
 
   RestaurantsProvider({required this.apiService}) {
-    _fetchAllRestaurant();
+    fetchAllRestaurant();
   }
 
   late RestaurantListResult _restaurantList;
@@ -26,7 +26,7 @@ class RestaurantsProvider extends ChangeNotifier {
 
   ResultState get state => _state;
 
-  Future<dynamic> _fetchAllRestaurant() async {
+  Future<dynamic> fetchAllRestaurant() async {
     try {
       _state = ResultState.loading;
       notifyListeners();

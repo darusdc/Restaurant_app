@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:restaurant_app/constants/references.dart';
-import 'package:restaurant_app/data/models/restaurant.dart';
+import 'package:resto_mana/constants/references.dart';
+import 'package:resto_mana/data/models/restaurant.dart';
 
 class ApiService {
   Future<RestaurantListResult> restaurantList() async {

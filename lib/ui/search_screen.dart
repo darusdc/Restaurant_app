@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app/data/api/api_service.dart';
-import 'package:restaurant_app/data/models/restaurant.dart';
-import 'package:restaurant_app/provider/restaurants_provider.dart';
-import 'package:restaurant_app/widgets/build_item_restaurant.dart';
+import 'package:resto_mana/data/api/api_service.dart';
+import 'package:resto_mana/data/models/restaurant.dart';
+import 'package:resto_mana/provider/restaurants_provider.dart';
+import 'package:resto_mana/widgets/build_item_restaurant.dart';
 
 class SearchScreen extends StatefulWidget {
   static const routeName = "/search";
-  const SearchScreen({Key? key}) : super(key: key);
+  const SearchScreen({super.key});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();

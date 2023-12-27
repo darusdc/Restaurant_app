@@ -2,13 +2,12 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:restaurant_app/common/styles.dart';
-import 'package:restaurant_app/data/api/api_service.dart';
-import 'package:restaurant_app/provider/restaurants_provider.dart';
-import 'package:restaurant_app/ui/restaurant_list.dart';
-import 'package:restaurant_app/ui/settings_page.dart';
-import 'package:restaurant_app/widgets/platform_widget.dart';
+import 'package:resto_mana/common/styles.dart';
+import 'package:resto_mana/ui/detail_page.dart';
+import 'package:resto_mana/ui/restaurant_list.dart';
+import 'package:resto_mana/ui/settings_page.dart';
+import 'package:resto_mana/utils/notification_helper.dart';
+import 'package:resto_mana/widgets/platform_widget.dart';
 
 class HomePage extends StatefulWidget {
   static const routeName = "/homepage";
@@ -21,11 +20,23 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _bottomNavIndex = 0;
   static const String _restaurantText = "Restaurant List";
+  final NotificationHelper _notificationHelper = NotificationHelper();
+
+  @override
+  void initState() {
+    super.initState();
+    _notificationHelper
+        .configureSelectNotificationSubject(RestaurantDetailPage.routeName);
+  }
+
+  @override
+  void dispose() {
+    selectNotificationSubject.close();
+    super.dispose();
+  }
+
   final List<Widget> _listWidget = [
-    ChangeNotifierProvider<RestaurantsProvider>(
-      create: (context) => RestaurantsProvider(apiService: ApiService()),
-      child: const RestaurantListPage(),
-    ),
+    const RestaurantListPage(),
     const SettingsPage(),
   ];
 

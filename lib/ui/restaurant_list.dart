@@ -5,10 +5,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app/provider/restaurants_provider.dart';
-import 'package:restaurant_app/ui/search_screen.dart';
-import 'package:restaurant_app/widgets/build_item_restaurant.dart';
-import 'package:restaurant_app/widgets/platform_widget.dart';
+import 'package:resto_mana/constants/references.dart';
+import 'package:resto_mana/provider/restaurants_provider.dart';
+import 'package:resto_mana/ui/favorite_restaurant.dart';
+import 'package:resto_mana/ui/search_screen.dart';
+import 'package:resto_mana/widgets/build_item_restaurant.dart';
+import 'package:resto_mana/widgets/platform_widget.dart';
 
 class RestaurantListPage extends StatelessWidget {
   const RestaurantListPage({super.key});
@@ -70,73 +72,148 @@ class RestaurantListPage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     ScrollController sc = ScrollController();
     ThemeData themes = Theme.of(context);
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: themes.primaryColor,
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: screenWidth > 300
-                ? [
-                    Text(
-                      "Resto Mana?",
-                      style: Theme.of(context).textTheme.titleLarge,
-                    ),
-                    IconButton(
-                        onPressed: () {
-                          Navigator.pushNamed(context, SearchScreen.routeName);
-                        },
-                        icon: const Icon(Icons.search))
-                  ]
-                : [],
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: themes.primaryColor,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: screenWidth > limitWidth
+                  ? [
+                      Text(
+                        "Resto Mana?",
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                        context, SearchScreen.routeName)
+                                    .then(
+                                  (value) {
+                                    setState(
+                                      () {},
+                                    );
+                                  },
+                                );
+                              },
+                              icon: const Icon(Icons.search)),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context,
+                                        FavoriteRestaurantPage.routeName)
+                                    .then(
+                                  (value) {
+                                    setState(
+                                      () {},
+                                    );
+                                  },
+                                );
+                              },
+                              icon: const Icon(Icons.favorite))
+                        ],
+                      ),
+                    ]
+                  : [],
+            ),
           ),
-        ),
-        body: NestedScrollView(
-          controller: kIsWeb
-              ? null
-              : Platform.isAndroid || Platform.isIOS
-                  ? sc
-                  : null,
-          headerSliverBuilder: (context, innerBoxIsScrolled) {
-            return [
-              SliverAppBar(
-                backgroundColor: themes.primaryColor,
-                pinned: true,
-                expandedHeight: 200,
-                flexibleSpace: FlexibleSpaceBar(
-                  background: Image.asset(
-                    'assets/pexels-ella-olsson-1640777.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                  title: Text(
-                    "Temukan Restoran Favoritmu:",
-                    textAlign: TextAlign.left,
-                    style: Theme.of(context).textTheme.headlineLarge,
-                  ),
-                ),
-              )
-            ];
-          },
-          body: SingleChildScrollView(
+          body: NestedScrollView(
             controller: kIsWeb
                 ? null
                 : Platform.isAndroid || Platform.isIOS
                     ? sc
                     : null,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: screenWidth > 300 ? [_buildList()] : [],
+            headerSliverBuilder: (context, innerBoxIsScrolled) {
+              return [
+                SliverAppBar(
+                  backgroundColor: themes.primaryColor,
+                  pinned: true,
+                  expandedHeight: 200,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Image.asset(
+                      'assets/pexels-ella-olsson-1640777.jpg',
+                      fit: BoxFit.cover,
+                    ),
+                    title: Text(
+                      "Temukan Restoran Favoritmu:",
+                      textAlign: TextAlign.left,
+                      style: Theme.of(context).textTheme.headlineLarge,
+                    ),
+                  ),
+                )
+              ];
+            },
+            body: SingleChildScrollView(
+              controller: kIsWeb
+                  ? null
+                  : Platform.isAndroid || Platform.isIOS
+                      ? sc
+                      : null,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: screenWidth > limitWidth ? [_buildList()] : [],
+              ),
             ),
           ),
-        ));
+        );
+      },
+    );
   }
 
   Widget _buildIos(BuildContext context) {
-    return CupertinoPageScaffold(
-      navigationBar: const CupertinoNavigationBar(
-        middle: Text('Resto Mana?'),
-        transitionBetweenRoutes: false,
-      ),
-      child: _buildList(),
+    double screenWidth = MediaQuery.of(context).size.width;
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return CupertinoPageScaffold(
+          navigationBar: CupertinoNavigationBar(
+            middle: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: screenWidth > limitWidth
+                  ? [
+                      Text(
+                        "Resto Mana?",
+                        style: Theme.of(context).textTheme.titleLarge,
+                      ),
+                      Row(
+                        children: [
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pushNamed(
+                                        context, SearchScreen.routeName)
+                                    .then(
+                                  (value) {
+                                    setState(
+                                      () {},
+                                    );
+                                  },
+                                );
+                              },
+                              icon: const Icon(Icons.search)),
+                          IconButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context,
+                                        FavoriteRestaurantPage.routeName)
+                                    .then(
+                                  (value) {
+                                    setState(
+                                      () {},
+                                    );
+                                  },
+                                );
+                              },
+                              icon: const Icon(Icons.favorite))
+                        ],
+                      ),
+                    ]
+                  : [],
+            ),
+            transitionBetweenRoutes: false,
+          ),
+          child: _buildList(),
+        );
+      },
     );
   }
 

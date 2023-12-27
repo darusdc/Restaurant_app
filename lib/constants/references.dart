@@ -5,3 +5,4 @@ const String imageMediumUrl =
     "https://restaurant-api.dicoding.dev/images/medium/";
 const String imageLargeUrl =
     "https://restaurant-api.dicoding.dev/images/large/";
+const double limitWidth = 350;

@@ -2,20 +2,19 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app/common/styles.dart';
-import 'package:restaurant_app/data/api/api_service.dart';
-import 'package:restaurant_app/provider/restaurants_provider.dart';
-import 'package:restaurant_app/ui/detail_restaurant_page.dart';
-import 'package:restaurant_app/ui/review_page.dart';
-import 'package:restaurant_app/widgets/platform_widget.dart';
+import 'package:resto_mana/common/styles.dart';
+import 'package:resto_mana/data/api/api_service.dart';
+import 'package:resto_mana/provider/restaurants_provider.dart';
+import 'package:resto_mana/ui/detail_restaurant_page.dart';
+import 'package:resto_mana/ui/review_page.dart';
+import 'package:resto_mana/widgets/platform_widget.dart';
 
 class RestaurantDetailPage extends StatefulWidget {
   static const routeName = '/restaurant_detail';
 
   final String restaurantId;
 
-  const RestaurantDetailPage({Key? key, required this.restaurantId})
-      : super(key: key);
+  const RestaurantDetailPage({super.key, required this.restaurantId});
 
   @override
   State<RestaurantDetailPage> createState() => _RestaurantDetailPageState();

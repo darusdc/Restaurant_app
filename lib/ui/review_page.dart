@@ -5,15 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app/constants/references.dart';
-import 'package:restaurant_app/provider/restaurants_provider.dart';
-import 'package:restaurant_app/widgets/platform_widget.dart';
+import 'package:resto_mana/constants/references.dart';
+import 'package:resto_mana/provider/restaurants_provider.dart';
+import 'package:resto_mana/widgets/platform_widget.dart';
 import 'package:http/http.dart' as http;
 
 class ReviewsPage extends StatefulWidget {
   static const String reviewsTitle = 'Review';
 
-  const ReviewsPage({Key? key, required this.id}) : super(key: key);
+  const ReviewsPage({super.key, required this.id});
   final String id;
 
   @override
@@ -63,9 +63,9 @@ class _ReviewsPageState extends State<ReviewsPage> {
       body: Platform.isAndroid
           ? SingleChildScrollView(
               controller: sc,
-              child: screenWidth > 300 ? _buildList(context, sc) : null)
+              child: screenWidth > limitWidth ? _buildList(context, sc) : null)
           : SingleChildScrollView(
-              child: screenWidth > 300 ? _buildList(context, sc) : null,
+              child: screenWidth > limitWidth ? _buildList(context, sc) : null,
             ),
     );
   }

@@ -4,9 +4,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:restaurant_app/constants/references.dart';
-import 'package:restaurant_app/data/models/restaurant.dart';
-import 'package:restaurant_app/provider/restaurants_provider.dart';
+import 'package:resto_mana/constants/references.dart';
+import 'package:resto_mana/data/models/restaurant.dart';
+import 'package:resto_mana/provider/restaurants_provider.dart';
+import 'package:resto_mana/utils/add_remove_restaurant.dart';
 
 class DetailRestaurantPage extends StatelessWidget {
   const DetailRestaurantPage({super.key});
@@ -109,6 +110,7 @@ class DetailRestaurantPage extends StatelessWidget {
 
   Widget _generateDetail(BuildContext context,
       {required DetailRestaurant restaurant, required ScrollController sc}) {
+    bool isFavorite = checkFavorite(restaurant.id);
     double screenWidth = MediaQuery.of(context).size.width;
     List foods = restaurant.menus.foods;
     List drinks = restaurant.menus.drinks;
@@ -121,15 +123,49 @@ class DetailRestaurantPage extends StatelessWidget {
               ? sc
               : null,
       child: Column(
-        children: screenWidth > 300
+        children: screenWidth > limitWidth
             ? [
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(restaurant.name,
-                          style: Theme.of(context).textTheme.titleLarge),
+                      Row(
+                        textBaseline: TextBaseline.ideographic,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text(restaurant.name,
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 4,
+                                softWrap: true,
+                                textWidthBasis: TextWidthBasis.parent,
+                                style: Theme.of(context).textTheme.titleLarge),
+                          ),
+                          StatefulBuilder(
+                            builder: (context, setState) {
+                              return IconButton(
+                                onPressed: () {
+                                  isFavorite
+                                      ? deleteFavoriteRestaurant(
+                                          restaurant.id, context)
+                                      : addFavoriteRestaurant(
+                                          restaurant.id, context);
+                                  setState(
+                                    () {
+                                      isFavorite = checkFavorite(restaurant.id);
+                                    },
+                                  );
+                                },
+                                icon: isFavorite
+                                    ? const Icon(Icons.favorite,
+                                        color: Colors.red)
+                                    : const Icon(Icons.favorite_border),
+                              );
+                            },
+                          )
+                        ],
+                      ),
                       Row(
                         children: [
                           const Icon(
