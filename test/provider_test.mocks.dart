@@ -4,13 +4,10 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'dart:async' as _i4;
-import 'dart:ui' as _i7;
 
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i6;
 import 'package:resto_mana/data/api/api_service.dart' as _i3;
 import 'package:resto_mana/data/models/restaurant.dart' as _i2;
-import 'package:resto_mana/provider/restaurants_provider.dart' as _i5;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -60,16 +57,6 @@ class _FakeCustomerReview_2 extends _i1.SmartFake
 
 class _FakeSearchResult_3 extends _i1.SmartFake implements _i2.SearchResult {
   _FakeSearchResult_3(
-    Object parent,
-    Invocation parentInvocation,
-  ) : super(
-          parent,
-          parentInvocation,
-        );
-}
-
-class _FakeApiService_4 extends _i1.SmartFake implements _i3.ApiService {
-  _FakeApiService_4(
     Object parent,
     Invocation parentInvocation,
   ) : super(
@@ -194,109 +181,4 @@ class MockApiService extends _i1.Mock implements _i3.ApiService {
           ),
         )),
       ) as _i4.Future<_i2.SearchResult>);
-}
-
-/// A class which mocks [RestaurantsProvider].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockRestaurantsProvider extends _i1.Mock
-    implements _i5.RestaurantsProvider {
-  @override
-  _i3.ApiService get apiService => (super.noSuchMethod(
-        Invocation.getter(#apiService),
-        returnValue: _FakeApiService_4(
-          this,
-          Invocation.getter(#apiService),
-        ),
-        returnValueForMissingStub: _FakeApiService_4(
-          this,
-          Invocation.getter(#apiService),
-        ),
-      ) as _i3.ApiService);
-
-  @override
-  String get message => (super.noSuchMethod(
-        Invocation.getter(#message),
-        returnValue: _i6.dummyValue<String>(
-          this,
-          Invocation.getter(#message),
-        ),
-        returnValueForMissingStub: _i6.dummyValue<String>(
-          this,
-          Invocation.getter(#message),
-        ),
-      ) as String);
-
-  @override
-  _i2.RestaurantListResult get result => (super.noSuchMethod(
-        Invocation.getter(#result),
-        returnValue: _FakeRestaurantListResult_0(
-          this,
-          Invocation.getter(#result),
-        ),
-        returnValueForMissingStub: _FakeRestaurantListResult_0(
-          this,
-          Invocation.getter(#result),
-        ),
-      ) as _i2.RestaurantListResult);
-
-  @override
-  _i5.ResultState get state => (super.noSuchMethod(
-        Invocation.getter(#state),
-        returnValue: _i5.ResultState.loading,
-        returnValueForMissingStub: _i5.ResultState.loading,
-      ) as _i5.ResultState);
-
-  @override
-  bool get hasListeners => (super.noSuchMethod(
-        Invocation.getter(#hasListeners),
-        returnValue: false,
-        returnValueForMissingStub: false,
-      ) as bool);
-
-  @override
-  _i4.Future<dynamic> fetchAllRestaurant() => (super.noSuchMethod(
-        Invocation.method(
-          #fetchAllRestaurant,
-          [],
-        ),
-        returnValue: _i4.Future<dynamic>.value(),
-        returnValueForMissingStub: _i4.Future<dynamic>.value(),
-      ) as _i4.Future<dynamic>);
-
-  @override
-  void addListener(_i7.VoidCallback? listener) => super.noSuchMethod(
-        Invocation.method(
-          #addListener,
-          [listener],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void removeListener(_i7.VoidCallback? listener) => super.noSuchMethod(
-        Invocation.method(
-          #removeListener,
-          [listener],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void dispose() => super.noSuchMethod(
-        Invocation.method(
-          #dispose,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
-
-  @override
-  void notifyListeners() => super.noSuchMethod(
-        Invocation.method(
-          #notifyListeners,
-          [],
-        ),
-        returnValueForMissingStub: null,
-      );
 }

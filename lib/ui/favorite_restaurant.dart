@@ -83,15 +83,17 @@ class _FavoriteRestaurantPageState extends State<FavoriteRestaurantPage> {
                 )
               : Center(
                   child: Material(
-                    child: Column(
-                      children: [
-                        const SizedBox(
-                          height: 200,
-                        ),
-                        Lottie.asset('assets/no_data.json'),
-                        const Text(
-                            "Kamu sepertinya belum menyukai satu restoranpun"),
-                      ],
+                    child: Flexible(
+                      child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 200,
+                          ),
+                          Lottie.asset('assets/no_data.json'),
+                          const Text(
+                              "Kamu sepertinya belum menyukai satu restoranpun"),
+                        ],
+                      ),
                     ),
                   ),
                 );

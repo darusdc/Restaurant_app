@@ -17,7 +17,7 @@ class RestaurantsProvider extends ChangeNotifier {
   }
 
   late RestaurantListResult _restaurantList;
-  late ResultState _state;
+  ResultState _state = ResultState.loading;
   String _message = '';
 
   String get message => _message;
@@ -31,7 +31,7 @@ class RestaurantsProvider extends ChangeNotifier {
       _state = ResultState.loading;
       notifyListeners();
       final restaurant = await apiService.restaurantList();
-      if (restaurant.restaurants.isEmpty) {
+      if (restaurant.count == 0) {
         _state = ResultState.noData;
         notifyListeners();
         return _message = 'Empty Data';
@@ -88,12 +88,15 @@ class DetailRestaurantsProvider extends ChangeNotifier {
 }
 
 class ReviewProvider with ChangeNotifier {
+  ApiService apiService;
+  ReviewProvider({required this.apiService});
+
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
 
   Future<dynamic> reviewProviderPost(
-      ApiService apiService, String id, String reviewText, String name) async {
+      String id, String reviewText, String name) async {
     try {
       _isLoading = true;
       notifyListeners();
